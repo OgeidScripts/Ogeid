@@ -69,9 +69,8 @@ function ARF()
                     pcall(function()
                         game:GetService("ReplicatedStorage").RemoteFunctions.Character.PVP.Punch:InvokeServer(3)
                     end)
-		  humanoid:TakeDamage(humanoid.MaxHealth)
 					end
-						
+				humanoid:TakeDamage(humanoid.MaxHealth)		
                 end
             end
 
