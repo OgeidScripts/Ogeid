@@ -30,7 +30,7 @@ local AutoRaidEnabled = false
 function ARF()
     -- Bloqueia fora da raid
     if game.PlaceId ~= 101026405220822 then
-        warn("Você está fora da raid")
+        print("Você está fora da raid")
         return
     end
 
@@ -41,7 +41,6 @@ function ARF()
 
     local currentEnemy = nil
 
-    -- Desativa ShiftLock enquanto o AutoRaid estiver ativo
     player.CanShiftLock = false
 
     task.spawn(function()
@@ -85,10 +84,7 @@ function ARF()
             end
 
             task.wait(0.05)
-        end
-
-        -- Reativa ShiftLock ao desligar
-        player.CanShiftLock = true
+			end
     end)
 end
 
