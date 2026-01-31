@@ -101,7 +101,7 @@ function LvUp()
 	task.wait(0.5)
 		fireproximityprompt(C4)
 			
-	task.wait(12)
+	task.wait(11)
 	
 	local Roubo = workspace.World.Map.Map_Scripts_Parts.Bank.Cash:GetChildren()[5].ProximityPrompt
 	Roubo.RequiresLineOfSight = false
