@@ -29,7 +29,7 @@ AutoRaidEnabled = false
 
 function ARF()
     -- Verifica se está na raid certa
-    if game.PlaceId ~= 131073412590872 then
+    if game.PlaceId == 131073412590872 then
         print("Você está fora da raid")
         return
     end
