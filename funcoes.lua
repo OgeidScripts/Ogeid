@@ -34,6 +34,9 @@ function ARF()
         return
     end
 
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
     local player = game.Players.LocalPlayer
     local hrp = player.Character:WaitForChild("HumanoidRootPart")
     local currentEnemy = nil
@@ -62,8 +65,6 @@ function ARF()
             -- Se encontrou inimigo, ataca
             if currentEnemy and currentEnemy.Character then
                 local hrpEnemy = currentEnemy.Character:FindFirstChild("HumanoidRootPart")
-                local Players = game:GetService("Players")
-                    local player = Players.LocalPlayer
 
                 if hrpEnemy and humanoid then
                     -- Move perto do NPC
@@ -74,7 +75,7 @@ function ARF()
                         game:GetService("ReplicatedStorage").RemoteFunctions.Character.PVP.Punch:InvokeServer(3)
                     end)
 						
-                   player.DevEnableMouseLock = false
+                   player.CanShiftLock = false
                     
                 end
             end
