@@ -25,10 +25,9 @@ function TaT(x, y, z, speed, pp)
 end
 
 ----------Funcao do AutoRaid----------
-local funcoes {}
-local funcoes.AutoRaidEnabled = false
+AutoRaidEnabled = AutoRaidEnabled or false
 
-function funcoes.ARF()
+function ARF()
 
     if game.PlaceId ~= 101026405220822 then
         warn("Você está fora da raid")
@@ -89,7 +88,6 @@ function funcoes.ARF()
         player:SetAttribute("CanShiftLock", true)
     end)
 end
-return funcoes
 ----------Funcao de roubar o banco----------
 function LvUp()
 	local C4 = workspace.World.Map.Map_Scripts_Parts.Bank.Vault.Door.C4.ProximityPrompt
