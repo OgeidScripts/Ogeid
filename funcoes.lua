@@ -25,7 +25,7 @@ function TaT(x, y, z, speed, pp)
 end
 
 ----------Funcao do AutoRaid----------
-AutoRaidEnabled = false
+local AutoRaidEnabled = false
 
 function ARF()
     -- Bloqueia fora da raid
@@ -41,45 +41,52 @@ function ARF()
 
     local currentEnemy = nil
 
-    -- Desativa shift lock
-    player:SetAttribute("Canshiftlock", false)
+    -- DESATIVA ShiftLock (Attribute)
+    player:SetAttribute("CanShiftLock", false)
 
     task.spawn(function()
         while AutoRaidEnabled do
-            task.wait(0.2)
 
-            -- Se não tiver inimigo válido, procura outro
+            -- Procura inimigo válido
             if not currentEnemy
-            or not currentEnemy.Parent
-            or not currentEnemy.Character
-            or not currentEnemy.Character:FindFirstChild("Humanoid")
-            or currentEnemy.Character.Humanoid.Health <= 0 then
+                or not currentEnemy.Parent
+                or not currentEnemy.Character
+                or not currentEnemy.Character:FindFirstChild("Humanoid")
+                or currentEnemy.Character.Humanoid.Health <= 0 then
 
                 currentEnemy = nil
 
-                for _, enemy in ipairs(workspace.Enemys:GetChildren()) do
-                    local char = enemy:FindFirstChild("Character")
+                for _, enemy in pairs(workspace.Enemys:GetChildren()) do
+                    local char = enemy.Character
                     local humanoid = char and char:FindFirstChild("Humanoid")
-                    local enemyHRP = char and char:FindFirstChild("HumanoidRootPart")
 
-                    if humanoid and humanoid.Health > 0 and enemyHRP then
+                    if humanoid and humanoid.Health > 0 then
                         currentEnemy = enemy
                         break
                     end
                 end
             end
 
-            -- Se achou inimigo, vai até ele
+            -- Ataca inimigo atual
             if currentEnemy and currentEnemy.Character then
-                local enemyHRP = currentEnemy.Character:FindFirstChild("HumanoidRootPart")
+                local enemyHRP =
+                    currentEnemy.Character:FindFirstChild("HumanoidRootPart")
+
                 if enemyHRP then
-                    hrp.CFrame = enemyHRP.CFrame * CFrame.new(0, 0, -3)
+                    hrp.CFrame = enemyHRP.CFrame * CFrame.new(0, 0, 3)
+
+                    pcall(function()
+                        game:GetService("ReplicatedStorage")
+                            .RemoteFunctions.Character.PVP.Punch:InvokeServer(3)
+                    end)
                 end
             end
+
+            task.wait(0.05)
         end
 
-        -- Quando desligar, devolve shift lock
-        player:SetAttribute("Canshiftlock", true)
+        -- REATIVA ShiftLock quando desligar
+        player:SetAttribute("CanShiftLock", true)
     end)
 end
 
