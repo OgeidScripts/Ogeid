@@ -25,12 +25,12 @@ function TaT(x, y, z, speed, pp)
 end
 
 ----------Funcao do AutoRaid----------
-local AutoRaidEnabled = false
+AutoRaidEnabled = false
 
 function ARF()
     -- Bloqueia fora da raid
     if game.PlaceId ~= 101026405220822 then
-        print("Você está fora da raid")
+        warn("Você está fora da raid")
         return
     end
 
@@ -41,50 +41,45 @@ function ARF()
 
     local currentEnemy = nil
 
+    -- Desativa shift lock
     player.CanShiftLock = false
 
     task.spawn(function()
         while AutoRaidEnabled do
+            task.wait(0.2)
 
-            -- Procura inimigo válido
+            -- Se não tiver inimigo válido, procura outro
             if not currentEnemy
-                or not currentEnemy.Parent
-                or not currentEnemy.Character
-                or not currentEnemy.Character:FindFirstChild("Humanoid")
-                or currentEnemy.Character.Humanoid.Health <= 0 then
+            or not currentEnemy.Parent
+            or not currentEnemy.Character
+            or not currentEnemy.Character:FindFirstChild("Humanoid")
+            or currentEnemy.Character.Humanoid.Health <= 0 then
 
                 currentEnemy = nil
 
-                for _, enemy in pairs(workspace.Enemys:GetChildren()) do
-                    local char = enemy.Character
+                for _, enemy in ipairs(workspace.Enemys:GetChildren()) do
+                    local char = enemy:FindFirstChild("Character")
                     local humanoid = char and char:FindFirstChild("Humanoid")
+                    local enemyHRP = char and char:FindFirstChild("HumanoidRootPart")
 
-                    if humanoid and humanoid.Health > 0 then
+                    if humanoid and humanoid.Health > 0 and enemyHRP then
                         currentEnemy = enemy
                         break
                     end
                 end
             end
 
-            -- Ataca o inimigo atual
+            -- Se achou inimigo, vai até ele
             if currentEnemy and currentEnemy.Character then
-                local enemyChar = currentEnemy.Character
-                local enemyHRP = enemyChar:FindFirstChild("HumanoidRootPart")
-
+                local enemyHRP = currentEnemy.Character:FindFirstChild("HumanoidRootPart")
                 if enemyHRP then
-                    -- Fica atrás do NPC
-                    hrp.CFrame = enemyHRP.CFrame * CFrame.new(0, 0, 3)
-
-                    -- Ataque normal do jogo
-                    pcall(function()
-                        game:GetService("ReplicatedStorage")
-                            .RemoteFunctions.Character.PVP.Punch:InvokeServer(3)
-                    end)
+                    hrp.CFrame = enemyHRP.CFrame * CFrame.new(0, 0, -3)
                 end
             end
+        end
 
-            task.wait(0.05)
-			end
+        -- Quando desligar, devolve shift lock
+        player.CanShiftLock = true
     end)
 end
 
