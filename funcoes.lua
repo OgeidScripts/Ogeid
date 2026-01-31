@@ -31,8 +31,7 @@ local AutoRaidEnabled = false
 function ARF()
     if game.PlaceId == 131073412590872 then
         print("Proibido fora de raid")
-        return
-    end
+	else
 
     local player = game.Players.LocalPlayer
     local hrp = player.Character:WaitForChild("HumanoidRootPart")
