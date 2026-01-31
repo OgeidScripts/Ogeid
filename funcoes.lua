@@ -25,22 +25,23 @@ function TaT(x, y, z, speed, pp)
 end
 
 ----------Funcao do AutoRaid----------
-local AutoRaidEnabled = false
+AutoRaidEnabled = false
 
--- Função principal do AutoRaid focado
 function ARF()
+    -- Verifica se está na raid certa
     if game.PlaceId ~= 131073412590872 then
         print("Você está fora da raid")
-	return
-	end
+        return
+    end
 
     local player = game.Players.LocalPlayer
     local hrp = player.Character:WaitForChild("HumanoidRootPart")
     local currentEnemy = nil
 
+    -- Loop do AutoRaid
     spawn(function()
         while AutoRaidEnabled do
-            -- Se não tem alvo válido, procura o próximo
+            -- Procura inimigo válido
             if not currentEnemy
                or not currentEnemy.Parent
                or not currentEnemy.Character
@@ -48,33 +49,36 @@ function ARF()
                or currentEnemy.Character.Humanoid.Health <= 0 then
 
                 currentEnemy = nil
-
                 for _, enemy in pairs(workspace.Enemys:GetChildren()) do
                     local char = enemy.Character
                     local humanoid = char and char:FindFirstChild("Humanoid")
                     if humanoid and humanoid.Health > 0 then
                         currentEnemy = enemy
-                        break -- pega o PRIMEIRO válido
+                        break -- pega o primeiro inimigo válido
                     end
                 end
             end
 
-            -- Se tem alvo válido, ataca
+            -- Se encontrou inimigo, ataca
             if currentEnemy and currentEnemy.Character then
                 local hrpEnemy = currentEnemy.Character:FindFirstChild("HumanoidRootPart")
                 local humanoid = currentEnemy.Character:FindFirstChild("Humanoid")
-					if hrpEnemy then
+
+                if hrpEnemy and humanoid then
                     -- Move perto do NPC
-                    hrp.CFrame = hrpEnemy.CFrame * CFrame.new(0, 0, 3)
-                    -- Ataca
+                    hrp.CFrame = hrpEnemy.CFrame * CFrame.new(0,0,3)
+
+                    -- Ataca via RemoteFunction
                     pcall(function()
                         game:GetService("ReplicatedStorage").RemoteFunctions.Character.PVP.Punch:InvokeServer(3)
                     end)
-				    humanoid:TakeDamage(humanoid.MaxHealth)		
+
+                    -- Dano instantâneo
+                    humanoid:TakeDamage(humanoid.MaxHealth)
                 end
             end
 
-            task.wait(0.05) -- pequeno delay
+            task.wait(0.05) -- pequeno delay para não travar
         end
     end)
 end
