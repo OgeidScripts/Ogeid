@@ -74,7 +74,7 @@ function ARF()
                     end)
 
                     -- Dano instantâneo
-                    humanoid:TakeDamage(humanoid.MaxHealth)
+                    humanoid:TakeDamage(2)
                 end
             end
 
