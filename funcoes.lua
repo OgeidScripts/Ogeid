@@ -28,7 +28,7 @@ end
 local AutoRaidEnabled = false
 
 function ARF()
-    -- Bloqueia fora da raid
+
     if game.PlaceId ~= 101026405220822 then
         warn("Você está fora da raid")
         return
