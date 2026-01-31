@@ -62,7 +62,8 @@ function ARF()
             -- Se encontrou inimigo, ataca
             if currentEnemy and currentEnemy.Character then
                 local hrpEnemy = currentEnemy.Character:FindFirstChild("HumanoidRootPart")
-                local humanoid = currentEnemy.Character:FindFirstChild("Humanoid")
+                local Players = game:GetService("Players")
+                    local player = Players.LocalPlayer
 
                 if hrpEnemy and humanoid then
                     -- Move perto do NPC
@@ -72,9 +73,9 @@ function ARF()
                     pcall(function()
                         game:GetService("ReplicatedStorage").RemoteFunctions.Character.PVP.Punch:InvokeServer(3)
                     end)
-
-                    -- Dano instantâneo
-                    humanoid:TakeDamage(2)
+						
+                   player.DevEnableMouseLock = false
+                    
                 end
             end
 
