@@ -39,10 +39,9 @@ function ARF()
     local character = player.Character or player.CharacterAdded:Wait()
     local hrp = character:WaitForChild("HumanoidRootPart")
 
-    local currentEnemy = nil
-
-    -- DESATIVA ShiftLock (Attribute)
-    player:SetAttribute("CanShiftLock", false)
+	player:SetAttribute("CanShiftLock", false)
+   
+	local currentEnemy = nil
 
     task.spawn(function()
         while AutoRaidEnabled do
