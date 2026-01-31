@@ -62,15 +62,15 @@ function ARF()
             -- Se tem alvo válido, ataca
             if currentEnemy and currentEnemy.Character then
                 local hrpEnemy = currentEnemy.Character:FindFirstChild("HumanoidRootPart")
-                if hrpEnemy then
+                local humanoid = currentEnemy.Character:FindFirstChild("Humanoid")
+					if hrpEnemy then
                     -- Move perto do NPC
                     hrp.CFrame = hrpEnemy.CFrame * CFrame.new(0, 0, 3)
                     -- Ataca
                     pcall(function()
                         game:GetService("ReplicatedStorage").RemoteFunctions.Character.PVP.Punch:InvokeServer(3)
                     end)
-					end
-				humanoid:TakeDamage(humanoid.MaxHealth)		
+				    humanoid:TakeDamage(humanoid.MaxHealth)		
                 end
             end
 
