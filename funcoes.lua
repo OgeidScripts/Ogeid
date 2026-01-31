@@ -42,7 +42,7 @@ function ARF()
     local currentEnemy = nil
 
     -- Desativa shift lock
-    player.CanShiftLock = false
+    player:SetAttribute("Canshiftlock", false)
 
     task.spawn(function()
         while AutoRaidEnabled do
@@ -79,7 +79,7 @@ function ARF()
         end
 
         -- Quando desligar, devolve shift lock
-        player.CanShiftLock = true
+        player:SetAttribute("Canshiftlock", true)
     end)
 end
 
