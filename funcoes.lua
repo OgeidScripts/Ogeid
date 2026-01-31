@@ -29,9 +29,10 @@ local AutoRaidEnabled = false
 
 -- Função principal do AutoRaid focado
 function ARF()
-    if game.PlaceId == 131073412590872 then
-        print("Proibido fora de raid")
-	else
+    if game.PlaceId ~= 131073412590872 then
+        print("Você está fora da raid")
+	return
+	end
 
     local player = game.Players.LocalPlayer
     local hrp = player.Character:WaitForChild("HumanoidRootPart")
